@@ -1,0 +1,190 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
+
+namespace CommitteeMeetingSystem.Models
+{
+    public class Member
+    {
+        [Key]
+        public int MemberId { get; set; }
+
+        [DisplayName("اسم العضو")]
+        [Required(ErrorMessage = "اسم العضو مطلوب")]
+        [StringLength(100, ErrorMessage = "الحد الأقصى للاسم هو 100 حرف")]
+        public string Name { get; set; }
+
+        [DisplayName("رقم الهوية")]
+        [Required(ErrorMessage = "رقم الهوية مطلوب")]
+        [Range(1000000000, 9999999999, ErrorMessage = "رقم الهوية يجب أن يكون مكونًا من 10 أرقام")]
+        public long NationalId { get; set; }
+
+        [DisplayName("اسم المستخدم")]
+        [Required(ErrorMessage = "اسم المستخدم مطلوب")]
+        [StringLength(50, ErrorMessage = "الحد الأقصى لاسم المستخدم هو 50 حرف")]
+        public string Username { get; set; }
+
+        [DisplayName("رقم الجوال")]
+        [Required(ErrorMessage = "رقم الجوال مطلوب")]
+        [RegularExpression(@"^05[0-9]{8}$", ErrorMessage = "رقم الجوال غير صحيح")]
+        public string PhoneNumber { get; set; }
+
+        [DisplayName("البريد الإلكتروني")]
+        [EmailAddress(ErrorMessage = "صيغة البريد الإلكتروني غير صحيحة")]
+        public string Email { get; set; }
+    }
+
+    public class Committee
+    {
+        [Key]
+        public int CommitteeId { get; set; }
+
+        [DisplayName("اسم اللجنة")]
+        [Required(ErrorMessage = "اسم اللجنة مطلوب")]
+        [StringLength(150, ErrorMessage = "الحد الأقصى لاسم اللجنة هو 150 حرف")]
+        public string Name { get; set; }
+
+        [DisplayName("رئيس اللجنة")]
+        [Required(ErrorMessage = "رئيس اللجنة مطلوب")]
+        public int ChairmanId { get; set; }
+        [ForeignKey("ChairmanId")]
+        public Member Chairman { get; set; }
+
+        [DisplayName("أمين اللجنة")]
+        [Required(ErrorMessage = "أمين اللجنة مطلوب")]
+        public int SecretaryId { get; set; }
+        [ForeignKey("SecretaryId")]
+        public Member Secretary { get; set; }
+
+        [DisplayName("الأعضاء")]
+        public ICollection<Member> Members { get; set; }
+    }
+
+    public class Session
+    {
+        [Key]
+        public int SessionId { get; set; }
+
+        [DisplayName("رقم الجلسة")]
+        [Required(ErrorMessage = "رقم الجلسة مطلوب")]
+        public int SessionNumber { get; set; }
+
+        [DisplayName("تاريخ الجلسة")]
+        [Required(ErrorMessage = "تاريخ الجلسة مطلوب")]
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
+
+        [DisplayName("وقت البدء")]
+        [Required(ErrorMessage = "وقت البدء مطلوب")]
+        [DataType(DataType.Time)]
+        public TimeSpan StartTime { get; set; }
+
+        [DisplayName("وقت الانتهاء")]
+        [Required(ErrorMessage = "وقت الانتهاء مطلوب")]
+        [DataType(DataType.Time)]
+        public TimeSpan EndTime { get; set; }
+
+        [DisplayName("اللجنة")]
+        [Required(ErrorMessage = "اللجنة مطلوبة")]
+        public int CommitteeId { get; set; }
+        [ForeignKey("CommitteeId")]
+        public Committee Committee { get; set; }
+
+        [DisplayName("الأعضاء الحاضرون")]
+        public ICollection<Member> Attendees { get; set; }
+
+        [DisplayName("المواضيع")]
+        public ICollection<Topic> Topics { get; set; }
+
+        [DisplayName("محضر الجلسة")]
+        public MinutesOfMeeting MinutesOfMeeting { get; set; }
+
+        [DisplayName("قرارات الجلسة")]
+        public ICollection<Decision> Decisions { get; set; }
+    }
+
+    public class Topic
+    {
+        [Key]
+        public int TopicId { get; set; }
+
+        [DisplayName("رقم الموضوع")]
+        [Required(ErrorMessage = "رقم الموضوع مطلوب")]
+        public int TopicNumber { get; set; }
+
+        [DisplayName("عنوان الموضوع")]
+        [Required(ErrorMessage = "عنوان الموضوع مطلوب")]
+        [StringLength(200, ErrorMessage = "الحد الأقصى للعنوان هو 200 حرف")]
+        public string Title { get; set; }
+
+        [DisplayName("وصف الموضوع")]
+        public string Description { get; set; }
+
+        [DisplayName("مرفقات")]
+        public string Attachments { get; set; }
+
+        [DisplayName("الجلسة")]
+        [Required(ErrorMessage = "الجلسة مطلوبة")]
+        public int SessionId { get; set; }
+        [ForeignKey("SessionId")]
+        public Session Session { get; set; }
+    }
+
+    public class MinutesOfMeeting
+    {
+        [Key]
+        public int MinutesId { get; set; }
+
+        [DisplayName("رقم المحضر")]
+        [Required(ErrorMessage = "رقم المحضر مطلوب")]
+        public int MinutesNumber { get; set; }
+
+        [DisplayName("تاريخ المحضر")]
+        [Required(ErrorMessage = "تاريخ المحضر مطلوب")]
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
+
+        [DisplayName("ملخص النقاشات")]
+        public string Summary { get; set; }
+
+        [DisplayName("القرارات المتخذة")]
+        public string DecisionsTaken { get; set; }
+
+        [DisplayName("الجلسة")]
+        [Required(ErrorMessage = "الجلسة مطلوبة")]
+        public int SessionId { get; set; }
+        [ForeignKey("SessionId")]
+        public Session Session { get; set; }
+    }
+
+    public class Decision
+    {
+        [Key]
+        public int DecisionId { get; set; }
+
+        [DisplayName("رقم القرار")]
+        [Required(ErrorMessage = "رقم القرار مطلوب")]
+        public int DecisionNumber { get; set; }
+
+        [DisplayName("تاريخ القرار")]
+        [Required(ErrorMessage = "تاريخ القرار مطلوب")]
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
+
+        [DisplayName("نص القرار")]
+        [Required(ErrorMessage = "نص القرار مطلوب")]
+        public string Content { get; set; }
+
+        [DisplayName("حالة القرار")]
+        [Required(ErrorMessage = "حالة القرار مطلوبة")]
+        public string Status { get; set; } // Pending, InProgress, Completed
+
+        [DisplayName("الجلسة")]
+        [Required(ErrorMessage = "الجلسة مطلوبة")]
+        public int SessionId { get; set; }
+        [ForeignKey("SessionId")]
+        public Session Session { get; set; }
+    }
+}
