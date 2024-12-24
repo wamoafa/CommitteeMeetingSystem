@@ -1,5 +1,6 @@
 ﻿using Azure.Identity;
 using MeetWise.Application.Common.Interfaces;
+using MeetWise.Application.Interfaces;
 using MeetWise.Infrastructure.Data;
 using MeetWise.Web.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +35,8 @@ public static class DependencyInjection
             configure.Title = "MeetWise API";
 
         });
+        builder.Services.AddScoped<ICommitteeRepository, CommitteeRepository>();
+
     }
 
     public static void AddKeyVaultIfConfigured(this IHostApplicationBuilder builder)

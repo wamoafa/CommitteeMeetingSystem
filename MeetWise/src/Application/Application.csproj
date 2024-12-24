@@ -18,9 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Committee\Commands\" />
     <Folder Include="Committee\EventHandlers\" />
-    <Folder Include="Committee\Queries\" />
     <Folder Include="Decision\Commands\" />
     <Folder Include="Decision\EventHandlers\" />
     <Folder Include="Decision\Queries\" />
