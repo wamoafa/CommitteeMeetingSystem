@@ -17,4 +17,22 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Committee\Commands\" />
+    <Folder Include="Committee\EventHandlers\" />
+    <Folder Include="Committee\Queries\" />
+    <Folder Include="Decision\Commands\" />
+    <Folder Include="Decision\EventHandlers\" />
+    <Folder Include="Decision\Queries\" />
+    <Folder Include="Member\Commands\" />
+    <Folder Include="Member\EventHandlers\" />
+    <Folder Include="Member\Queries\" />
+    <Folder Include="Session\Commands\" />
+    <Folder Include="Session\EventHandlers\" />
+    <Folder Include="Session\Queries\" />
+    <Folder Include="Topic\Commands\" />
+    <Folder Include="Topic\EventHandlers\" />
+    <Folder Include="Topic\Queries\" />
+  </ItemGroup>
+
 </Project>
