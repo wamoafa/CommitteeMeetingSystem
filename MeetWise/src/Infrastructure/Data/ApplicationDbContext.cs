@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using AutoMapper.Execution;
 using MeetWise.Application.Common.Interfaces;
 using MeetWise.Domain.Entities;
 using MeetWise.Infrastructure.Identity;
@@ -16,6 +17,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     public DbSet<TodoItem> TodoItems => Set<TodoItem>();
 
     public DbSet<Committee> Committees { get; set; }
+    public DbSet<Members> Members { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

@@ -1,12 +1,13 @@
 ﻿using MeetWise.Domain.Entities;
-
-namespace MeetWise.Application.Common.Interfaces;
+using MeetWise.Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {
     DbSet<TodoList> TodoLists { get; }
 
     DbSet<TodoItem> TodoItems { get; }
+   DbSet<Committee> Committees { get;}
+    DbSet<Member> Members { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

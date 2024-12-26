@@ -2,7 +2,7 @@ namespace MeetWise.Domain.Entities
 {
     public class Committee : BaseAuditableEntity
     {
-        public string Name { get; set; } = null!;
+        public string? Name { get; set; } = null!;
         public string? Details { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsActive { get; set; }

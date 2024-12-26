@@ -3,6 +3,7 @@
   <PropertyGroup>
     <RootNamespace>MeetWise.Domain</RootNamespace>
     <AssemblyName>MeetWise.Domain</AssemblyName>
+    <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

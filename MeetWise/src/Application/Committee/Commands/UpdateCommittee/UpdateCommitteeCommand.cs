@@ -2,14 +2,14 @@ using MediatR;
 
 namespace MeetWise.Application.Committee.Commands.UpdateCommittee
 {
-    public class UpdateCommitteeCommand : IRequest
+    public class UpdateCommitteeCommand : IRequest<Unit>
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
-        public string? Description { get; set; }
+        public string? Details { get; set; }
     }
 
-    public class UpdateCommitteeCommandHandler : IRequestHandler<UpdateCommitteeCommand>
+    public class UpdateCommitteeCommandHandler : IRequestHandler<UpdateCommitteeCommand, Unit>
     {
         private readonly IApplicationDbContext _context;
 
@@ -24,11 +24,11 @@ namespace MeetWise.Application.Committee.Commands.UpdateCommittee
 
             if (entity == null)
             {
-                throw new NotFoundException(nameof(Committee), request.Id);
+                throw new NotFoundException(nameof(Committee), request.Id.ToString());
             }
 
             entity.Name = request.Name;
-            entity.Description = request.Description;
+            entity.Details = request.Details;
 
             await _context.SaveChangesAsync(cancellationToken);
 

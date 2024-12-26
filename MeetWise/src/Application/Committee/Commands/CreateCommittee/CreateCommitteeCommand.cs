@@ -4,9 +4,9 @@ using MeetWise.Domain.Entities;
 
 public class CreateCommitteeCommand : IRequest<int>
 {
-    public string Name { get; set; }
-    public string Details { get; set; }
-    public List<int> MemberIds { get; set; }
+    public string? Name { get; set; }
+    public string? Details { get; set; }
+    public List<int>? MemberIds { get; set; }
 }
 
 public class CreateCommitteeCommandHandler : IRequestHandler<CreateCommitteeCommand, int>
