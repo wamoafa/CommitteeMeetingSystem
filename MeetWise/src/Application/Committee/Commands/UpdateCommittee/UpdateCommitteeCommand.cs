@@ -1,6 +1,7 @@
 using MediatR;
+using MeetWise.Domain.Entities;
 
-namespace MeetWise.Application.Committee.Commands.UpdateCommittee
+namespace MeetWise.Application
 {
     public class UpdateCommitteeCommand : IRequest<Unit>
     {

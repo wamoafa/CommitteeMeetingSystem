@@ -1,5 +1,5 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
+﻿using MeetWise.Application.Interfaces;
+using MeetWise.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;

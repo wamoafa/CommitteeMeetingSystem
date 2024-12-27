@@ -1,17 +1,1 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MeetWise.Application.Common.Interfaces
-{
-    public interface ICommitteeService
-    {
-        Task<int> CreateCommitteeAsync(Committee committee);
-        Task UpdateCommitteeAsync(Committee committee);
-        Task DeleteCommitteeAsync(int id);
-        Task<Committee> GetCommitteeByIdAsync(int id);
-        Task<List<Committee>> GetCommitteesAsync();
-    }
-}
+﻿using MeetWise.Domain.Entities; using System.Collections.Generic; using System.Threading; using System.Threading.Tasks;  namespace MeetWise.Application.Interfaces {     public interface ICommitteeService     {         Task<int> CreateCommitteeAsync(Committee committee, CancellationToken cancellationToken);         Task UpdateCommitteeAsync(Committee committee, CancellationToken cancellationToken);         Task DeleteCommitteeAsync(int committeeId, CancellationToken cancellationToken);         Task<Committee> GetCommitteeByIdAsync(int committeeId, CancellationToken cancellationToken);         Task<List<Committee>> GetAllCommitteesAsync(CancellationToken cancellationToken);     } } 

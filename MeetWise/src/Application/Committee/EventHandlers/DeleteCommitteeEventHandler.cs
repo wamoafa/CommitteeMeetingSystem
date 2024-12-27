@@ -1,7 +1,8 @@
 using MediatR;
+using MeetWise.Domain.Events;
 using Microsoft.Extensions.Logging;
 
-namespace MeetWise.Application.Committee.EventHandlers
+namespace MeetWise.Application
 {
     public class DeleteCommitteeEventHandler : INotificationHandler<DeleteCommitteeEvent>
     {

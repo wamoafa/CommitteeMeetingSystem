@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MeetWise.Domain.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MeetWise.Models; 
-
 
 namespace MeetWise.Application.Interfaces
 {
@@ -16,6 +10,6 @@ namespace MeetWise.Application.Interfaces
         Task<Committee> GetByIdAsync(int id);
         Task AddAsync(Committee committee);
         Task UpdateAsync(Committee committee);
-        Task DeleteAsync(int id); // Soft delete
+        Task DeleteAsync(int id);
     }
 }

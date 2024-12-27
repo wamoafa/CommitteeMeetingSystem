@@ -31,7 +31,7 @@ public class GetCommitteeByIdQueryHandler : IRequestHandler<GetCommitteeByIdQuer
 
         if (committee == null || committee.IsDeleted)
         {
-            throw new NotFoundException(nameof(Committee), request.Id);
+            throw new NotFoundException(nameof(Committee), request.Id.ToString());
         }
 
         return new CommitteeDto
@@ -46,6 +46,6 @@ public class GetCommitteeByIdQueryHandler : IRequestHandler<GetCommitteeByIdQuer
 public class CommitteeDto
 {
     public int Id { get; set; }
-    public string Name { get; set; }
-    public string Details { get; set; }
+    public string? Name { get; set; }
+    public string? Details { get; set; }
 }

@@ -5,6 +5,7 @@ using MeetWise.Domain.Entities;
 using MeetWise.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Member = MeetWise.Domain.Entities.Member;
 
 namespace MeetWise.Infrastructure.Data;
 
@@ -17,7 +18,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     public DbSet<TodoItem> TodoItems => Set<TodoItem>();
 
     public DbSet<Committee> Committees { get; set; }
-    public DbSet<Members> Members { get; set; }
+    public DbSet<Member> Members { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

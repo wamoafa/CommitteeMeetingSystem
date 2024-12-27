@@ -1,36 +1,43 @@
 ﻿using MediatR;
 using MeetWise.Application.Common.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
-public class GetCommitteesQuery : IRequest<List<CommitteeDto>> { }
-
-public class GetCommitteesQueryHandler : IRequestHandler<GetCommitteesQuery, List<CommitteeDto>>
+namespace MeetWise.Application
 {
-    private readonly IApplicationDbContext _context;
+    public class GetCommitteesQuery : IRequest<List<CommitteeQuerieDto>> { }
 
-    public GetCommitteesQueryHandler(IApplicationDbContext context)
+    public class GetCommitteesQueryHandler : IRequestHandler<GetCommitteesQuery, List<CommitteeQuerieDto>>
     {
-        _context = context;
+        private readonly IApplicationDbContext _context;
+
+        public GetCommitteesQueryHandler(IApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<List<CommitteeQuerieDto>> Handle(GetCommitteesQuery request, CancellationToken cancellationToken)
+        {
+            return await _context.Committees
+                .Select(c => new CommitteeQuerieDto
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Details = c.Details,
+                    MemberCount = c.Members.Count
+                })
+                .ToListAsync(cancellationToken);
+        }
     }
 
-    public async Task<List<CommitteeDto>> Handle(GetCommitteesQuery request, CancellationToken cancellationToken)
+    public class CommitteeQuerieDto
     {
-        return await _context.Committees
-            .Select(c => new CommitteeDto
-            {
-                Id = c.Id,
-                Name = c.Name,
-                Details = c.Details,
-                MemberCount = c.Members.Count
-            })
-            .ToListAsync(cancellationToken);
+        public int Id { get; set; }
+        public string? Name { get; set; }
+        public string? Details { get; set; }
+        public int MemberCount { get; set; }
     }
-}
-
-public class CommitteeDto
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Details { get; set; }
-    public int MemberCount { get; set; }
 }

@@ -1,14 +1,10 @@
 ﻿using MeetWise.Application.Common.Interfaces;
+using MeetWise.Application.Interfaces;
+using MeetWise.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Common.Interfaces;
-using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MeetWise.Application.Services
@@ -19,47 +15,55 @@ namespace MeetWise.Application.Services
 
         public CommitteeService(IApplicationDbContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<int> CreateCommitteeAsync(Committee committee)
+        public async Task<int> CreateCommitteeAsync(Committee committee, CancellationToken cancellationToken)
         {
+            if (committee == null)
+                throw new ArgumentNullException(nameof(committee));
+
             _context.Committees.Add(committee);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
             return committee.Id;
         }
 
-        public async Task UpdateCommitteeAsync(Committee committee)
+        public async Task UpdateCommitteeAsync(Committee committee, CancellationToken cancellationToken)
         {
-            var existingCommittee = await _context.Committees.FindAsync(committee.Id);
-            if (existingCommittee != null)
-            {
-                existingCommittee.Name = committee.Name;
-                existingCommittee.MemberCount = committee.MemberCount;
-                existingCommittee.SessionCount = committee.SessionCount;
-                existingCommittee.IsActive = committee.IsActive;
-                await _context.SaveChangesAsync();
-            }
+            if (committee == null)
+                throw new ArgumentNullException(nameof(committee));
+
+            _context.Committees.Update(committee);
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task DeleteCommitteeAsync(int id)
+        public async Task DeleteCommitteeAsync(int committeeId, CancellationToken cancellationToken)
         {
-            var committee = await _context.Committees.FindAsync(id);
-            if (committee != null)
-            {
-                _context.Committees.Remove(committee);
-                await _context.SaveChangesAsync();
-            }
+            var committee = await _context.Committees.FindAsync(new object[] { committeeId }, cancellationToken);
+            if (committee == null)
+                throw new KeyNotFoundException($"Committee with ID {committeeId} not found.");
+
+            _context.Committees.Remove(committee);
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<Committee> GetCommitteeByIdAsync(int id)
+        public async Task<Committee> GetCommitteeByIdAsync(int committeeId, CancellationToken cancellationToken)
         {
-            return await _context.Committees.FindAsync(id);
+            var committee = await _context.Committees
+                .Include(c => c.Members)
+                .FirstOrDefaultAsync(c => c.Id == committeeId, cancellationToken);
+
+            if (committee == null)
+                throw new KeyNotFoundException($"Committee with ID {committeeId} not found.");
+
+            return committee;
         }
 
-        public async Task<List<Committee>> GetCommitteesAsync()
+        public async Task<List<Committee>> GetAllCommitteesAsync(CancellationToken cancellationToken)
         {
-            return await _context.Committees.ToListAsync();
+            return await _context.Committees
+                .Include(c => c.Members)
+                .ToListAsync(cancellationToken);
         }
     }
 }
