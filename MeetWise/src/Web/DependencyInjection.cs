@@ -1,7 +1,9 @@
 ﻿using Azure.Identity;
 using MeetWise.Application.Common.Interfaces;
 using MeetWise.Application.Interfaces;
+using MeetWise.Application.Services;
 using MeetWise.Infrastructure.Data;
+using MeetWise.Infrastructure.Persistence.Repositories;
 using MeetWise.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,6 +38,8 @@ public static class DependencyInjection
 
         });
         builder.Services.AddScoped<ICommitteeRepository, CommitteeRepository>();
+        builder.Services.AddScoped<ICommitteeService, CommitteeService>();
+
 
     }
 

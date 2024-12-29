@@ -59,11 +59,34 @@ namespace MeetWise.Application.Services
             return committee;
         }
 
-        public async Task<List<Committee>> GetAllCommitteesAsync(CancellationToken cancellationToken)
+        
+        public async Task<List<CommitteeDto>> GetAllCommitteesAsync(CancellationToken cancellationToken)
         {
-            return await _context.Committees
+            var committees = await _context.Committees
                 .Include(c => c.Members)
                 .ToListAsync(cancellationToken);
+
+            return committees.Select(c => new CommitteeDto
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Details = c.Details,
+                IsActive = c.IsActive,
+                Members = c.Members.Select(m => new MemberDto
+                {
+                    Id = m.Id,
+                    Name = m.Name,
+                    NationalId = m.NationalId,
+                    Username = m.Username,
+                    PhoneNumber = m.PhoneNumber,
+                    IsActive = m.IsActive
+                }).ToList()
+            }).ToList();
+        }
+
+        Task<List<global::CommitteeDto>> ICommitteeService.GetAllCommitteesAsync(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }

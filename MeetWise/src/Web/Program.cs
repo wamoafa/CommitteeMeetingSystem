@@ -8,6 +8,13 @@ builder.AddApplicationServices();
 builder.AddInfrastructureServices();
 builder.AddWebServices();
 
+// Add controllers with JSON options
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -39,6 +46,8 @@ app.UseExceptionHandler(options => { });
 
 
 app.MapEndpoints();
+app.MapControllers();
+
 
 app.Run();
 

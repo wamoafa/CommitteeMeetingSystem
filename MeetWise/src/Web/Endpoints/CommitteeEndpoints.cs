@@ -2,6 +2,7 @@
 using MeetWise.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MeetWise.Web.Endpoints
@@ -18,37 +19,37 @@ namespace MeetWise.Web.Endpoints
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCommittee([FromBody] Committee committee)
+        public async Task<IActionResult> CreateCommittee([FromBody] Committee committee, CancellationToken cancellationToken)
         {
-            var id = await _committeeService.CreateCommitteeAsync(committee);
+            var id = await _committeeService.CreateCommitteeAsync(committee, cancellationToken);
             return Ok(id);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateCommittee([FromBody] Committee committee)
+        public async Task<IActionResult> UpdateCommittee([FromBody] Committee committee, CancellationToken cancellationToken)
         {
-            await _committeeService.UpdateCommitteeAsync(committee);
+            await _committeeService.UpdateCommitteeAsync(committee, cancellationToken);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCommittee(int id)
+        public async Task<IActionResult> DeleteCommittee(int id, CancellationToken cancellationToken)
         {
-            await _committeeService.DeleteCommitteeAsync(id);
+            await _committeeService.DeleteCommitteeAsync(id, cancellationToken);
             return NoContent();
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCommitteeById(int id)
+        public async Task<IActionResult> GetCommitteeById(int id, CancellationToken cancellationToken)
         {
-            var committee = await _committeeService.GetCommitteeByIdAsync(id);
+            var committee = await _committeeService.GetCommitteeByIdAsync(id, cancellationToken);
             return Ok(committee);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCommittees()
+        public async Task<IActionResult> GetCommittees(CancellationToken cancellationToken)
         {
-            var committees = await _committeeService.GetCommitteesAsync();
+            var committees = await _committeeService.GetAllCommitteesAsync(cancellationToken);
             return Ok(committees);
         }
     }
