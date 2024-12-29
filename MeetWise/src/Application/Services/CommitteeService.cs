@@ -84,9 +84,9 @@ namespace MeetWise.Application.Services
             }).ToList();
         }
 
-        Task<List<global::CommitteeDto>> ICommitteeService.GetAllCommitteesAsync(CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+        //Task<List<global::CommitteeDto>> ICommitteeService.GetAllCommitteesAsync(CancellationToken cancellationToken)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
