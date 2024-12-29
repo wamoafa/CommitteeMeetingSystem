@@ -2,6 +2,7 @@
 using MeetWise.Application.Interfaces;
 using MeetWise.Domain.Entities;
 using MeetWise.Infrastructure.Identity;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -17,6 +18,7 @@ namespace MeetWise.Infrastructure.Data
         public DbSet<TodoItem> TodoItems => Set<TodoItem>();
         public DbSet<Committee> Committees { get; set; }
         public DbSet<Member> Members { get; set; }
+        public DbSet<Session> Sessions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

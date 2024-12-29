@@ -8,6 +8,8 @@ public interface IApplicationDbContext
     DbSet<TodoItem> TodoItems { get; }
    DbSet<Committee> Committees { get;}
     DbSet<Member> Members { get; }
+    DbSet<Session> Sessions { get;}
+
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }
