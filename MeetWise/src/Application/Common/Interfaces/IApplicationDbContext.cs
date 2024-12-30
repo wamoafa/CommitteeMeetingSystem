@@ -9,7 +9,7 @@ public interface IApplicationDbContext
    DbSet<Committee> Committees { get;}
     DbSet<Member> Members { get; }
     DbSet<Session> Sessions { get;}
-
+    DbSet<Topic> Topics { get;}
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

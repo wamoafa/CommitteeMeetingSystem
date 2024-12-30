@@ -325,7 +325,7 @@ namespace MeetWise.Infrastructure.Data.Migrations
 
                     b.HasIndex("SessionId");
 
-                    b.ToTable("Topic");
+                    b.ToTable("Topics");
                 });
 
             modelBuilder.Entity("MeetWise.Infrastructure.Identity.ApplicationUser", b =>

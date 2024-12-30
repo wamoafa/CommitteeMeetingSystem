@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MeetWise.Infrastructure.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class MigrationV012 : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -348,7 +348,7 @@ namespace MeetWise.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Topic",
+                name: "Topics",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -365,9 +365,9 @@ namespace MeetWise.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Topic", x => x.Id);
+                    table.PrimaryKey("PK_Topics", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Topic_Sessions_SessionId",
+                        name: "FK_Topics_Sessions_SessionId",
                         column: x => x.SessionId,
                         principalTable: "Sessions",
                         principalColumn: "Id",
@@ -439,8 +439,8 @@ namespace MeetWise.Infrastructure.Data.Migrations
                 column: "ListId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Topic_SessionId",
-                table: "Topic",
+                name: "IX_Topics_SessionId",
+                table: "Topics",
                 column: "SessionId");
         }
 
@@ -475,7 +475,7 @@ namespace MeetWise.Infrastructure.Data.Migrations
                 name: "TodoItems");
 
             migrationBuilder.DropTable(
-                name: "Topic");
+                name: "Topics");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

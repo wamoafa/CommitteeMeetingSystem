@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeetWise.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241229191750_MigrationV0.12")]
-    partial class MigrationV012
+    [Migration("20241230090815_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -328,7 +328,7 @@ namespace MeetWise.Infrastructure.Data.Migrations
 
                     b.HasIndex("SessionId");
 
-                    b.ToTable("Topic");
+                    b.ToTable("Topics");
                 });
 
             modelBuilder.Entity("MeetWise.Infrastructure.Identity.ApplicationUser", b =>

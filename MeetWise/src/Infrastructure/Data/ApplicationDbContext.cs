@@ -19,6 +19,7 @@ namespace MeetWise.Infrastructure.Data
         public DbSet<Committee> Committees { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<Session> Sessions { get; set; }
+        public DbSet<Topic> Topics { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

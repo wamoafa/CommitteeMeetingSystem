@@ -106,7 +106,7 @@ public class ApplicationDbContextInitialiser
         }
         try
         {
-            if (!_context.Committees.Any() && !_context.Members.Any() && !_context.Sessions.Any())
+            if (!_context.Committees.Any() && !_context.Members.Any() && !_context.Sessions.Any() && !_context.Topics.Any())
             {
                 var member1 = new Member
                 {
@@ -163,6 +163,26 @@ public class ApplicationDbContextInitialiser
                 };
 
                 _context.Sessions.Add(session1);
+
+                var topic1 = new Topic
+                {
+                    Title = "مناقشة الوضع المالي للجهة",
+                    Description = "تحليل الوضع المالي الحالي والاحتياجات المستقبلية.",
+                    Session = session1,
+                    IsActive = true,
+                    IsDeleted = false
+                };
+
+                var topic2 = new Topic
+                {
+                    Title = "مراجعة تقارير الإنفاق",
+                    Description = "مراجعة شاملة لتقارير الإنفاق للربع الأخير.",
+                    Session = session1,
+                    IsActive = true,
+                    IsDeleted = false
+                };
+
+                _context.Topics.AddRange(topic1, topic2);
 
                 await _context.SaveChangesAsync();
             }
