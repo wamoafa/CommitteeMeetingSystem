@@ -39,6 +39,8 @@ public static class DependencyInjection
         });
         builder.Services.AddScoped<ICommitteeRepository, CommitteeRepository>();
         builder.Services.AddScoped<ICommitteeService, CommitteeService>();
+        builder.Services.AddScoped<ISessionService, SessionService>();
+
 
 
     }

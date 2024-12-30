@@ -104,6 +104,74 @@ public class ApplicationDbContextInitialiser
 
             await _context.SaveChangesAsync();
         }
-        
+        try
+        {
+            if (!_context.Committees.Any() && !_context.Members.Any() && !_context.Sessions.Any())
+            {
+                var member1 = new Member
+                {
+                    Name = "عبدالله بن محمد",
+                    NationalId = "1010101010",
+                    Username = "a.mohammad",
+                    PhoneNumber = "0500000001",
+                    IsActive = true,
+                    IsDeleted = false
+                };
+
+                var member2 = new Member
+                {
+                    Name = "سعود بن عبدالعزيز",
+                    NationalId = "2020202020",
+                    Username = "s.abdulaziz",
+                    PhoneNumber = "0500000002",
+                    IsActive = true,
+                    IsDeleted = false
+                };
+
+                var member3 = new Member
+                {
+                    Name = "فيصل بن خالد",
+                    NationalId = "3030303030",
+                    Username = "f.khalid",
+                    PhoneNumber = "0500000003",
+                    IsActive = true,
+                    IsDeleted = false
+                };
+
+                _context.Members.AddRange(member1, member2, member3);
+
+                var financeCommittee = new Committee
+                {
+                    Name = "لجنة المالية",
+                    Details = "لجنة مختصة بالشؤون المالية.",
+                    IsActive = true,
+                    IsDeleted = false,
+                    Members = new[] { member1, member2 }
+                };
+
+                _context.Committees.Add(financeCommittee);
+
+                var session1 = new Session
+                {
+                    Name = "اجتماع مناقشة الميزانية",
+                    Date = DateTime.Now.AddDays(-10),
+                    Details = "مناقشة ميزانية العام القادم.",
+                    IsActive = true,
+                    IsDeleted = false,
+                    Committee = financeCommittee,
+                    Members = new[] { member1, member2 }
+                };
+
+                _context.Sessions.Add(session1);
+
+                await _context.SaveChangesAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while seeding the database.");
+            throw;
+        }
+
     }
 }
